@@ -12,7 +12,7 @@ using PersonsAPI.Models;
 namespace PersonsAPI.Migrations
 {
     [DbContext(typeof(PersonsAPIContext))]
-    [Migration("20240731101105_Initial")]
+    [Migration("20240731135922_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -52,6 +52,31 @@ namespace PersonsAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Persons");
+                });
+
+            modelBuilder.Entity("PersonsAPI.Models.Pet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Animal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pets");
                 });
 #pragma warning restore 612, 618
         }
