@@ -24,15 +24,29 @@ namespace PersonsAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Person>>> GetPersons() => _dbContext == null ? NotFound() : await _dbContext.Persons.ToListAsync();
 
+
+        private async Task<Person?> GetPersonByIdInternal(Guid id)
+        {
+            if (_dbContext == null) return null;
+            return await _dbContext.Persons.FindAsync(id);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPersonById(Guid id)
         {
-            if (_dbContext == null) return NotFound();
-
-            Person? person = await _dbContext.Persons.FindAsync(id);
+            Person? person = await GetPersonByIdInternal(id);
             if (person == null) return NotFound();
-            
             return person;
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<Person>> DeletePerson(Guid id)
+        {
+            Person? person = await GetPersonByIdInternal(id);
+            if (person == null) return NotFound();
+            _dbContext.Persons.Remove(person);
+            await _dbContext.SaveChangesAsync();
+            return Ok();
         }
     }
 }
