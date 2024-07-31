@@ -14,8 +14,7 @@ namespace PersonsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person) {
             if (_dbContext == null) return NotFound();
-            
-            
+
             _dbContext.Persons.Add(person);
             await _dbContext.SaveChangesAsync();
 
@@ -23,7 +22,7 @@ namespace PersonsAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Person>>> GetPersons() => _dbContext == null ? NotFound() : await _dbContext.Persons.ToListAsync();
+        public async Task<ActionResult<List<Person>>> GetPersons() => _dbContext == null ? NotFound() : await _dbContext.Persons.ToListAsync();
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPersonById(Guid id)

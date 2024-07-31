@@ -12,7 +12,7 @@ using PersonsAPI.Models;
 namespace PersonsAPI.Migrations
 {
     [DbContext(typeof(PersonsAPIContext))]
-    [Migration("20240730191137_Initial")]
+    [Migration("20240731101105_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -30,6 +30,24 @@ namespace PersonsAPI.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
